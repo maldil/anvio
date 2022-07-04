@@ -8,7 +8,7 @@ import anvio
 
 import anvio.utils as utils
 import anvio.terminal as terminal
-
+import numpy as np
 
 __author__ = "Developers of anvi'o (see AUTHORS.txt)"
 __copyright__ = "Copyleft 2015-2019, the Meren Lab (http://merenlab.org/)"
@@ -124,7 +124,7 @@ class HomogeneityCalculator(object):
                 #This line of code creates an array - similariies - containing all of the digits that are 0 (equal to each other in the ^ expresson)
                 #number_of_similarities is the length of that array - effectively, the number of 0s in the binary number
                 differences.append(number_of_similarities / num_genes)
-            residue_uniformity.append(sum(differences) / len(differences))
+            residue_uniformity.append(np.mean(differences))
 
         by_residue = sum(residue_uniformity) / len(residue_uniformity)
 
@@ -142,7 +142,7 @@ class HomogeneityCalculator(object):
                 diff = bin(binary_matrix_by_gene[gene] ^ binary_matrix_by_gene[counter])[2:].zfill(num_residues)
                 number_of_similarities = diff[-num_residues:].count('0')
                 differences.append(number_of_similarities / num_residues)
-            gene_uniformity.append(sum(differences) / len(differences))
+            gene_uniformity.append(np.mean(differences))
 
         by_gene = sum(gene_uniformity) / len(gene_uniformity)
 
